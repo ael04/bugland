@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mapa Interativo de Bugland</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <style>
+    #map { height: 600px; width: 100%; }
+    .custom-popup {
+      background: linear-gradient(to bottom, #b3d9ff, #1a75ff);
+      color: white;
+      padding: 10px;
+      border-radius: 10px;
+    }
+    .custom-popup img {
+      width: 100%;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script>
+    var map = L.map('map').setView([0, 0], 2);
+
+    // Link direto da imagem hospedada no Imgur
+    var imageUrl = 'https://i.imgur.com/KnjlzvA.png';
+
+    // Coordenadas da imagem (cantos inferior esquerdo e superior direito)
+    var imageBounds = [[-90, -180], [90, 180]];
+
+    // Adicionando a imagem como camada ao mapa
+    L.imageOverlay(imageUrl, imageBounds).addTo(map);
+
+    var markers = [
+      {
+        "coords": [30, -20],  // Ajuste as coordenadas conforme necessário
+        "popupContent": `
+          <div class="custom-popup">
+            <img src="https://i.imgur.com/kx2ewc5.png" alt="Bugópolis">
+            <b>Bugópolis</b><br>Bugópolis é a maior e mais dinâmica cidade de Bugland. Situada no coração do continente, Bugópolis é o centro comercial, acadêmico e industrial de Bugland. A cidade é um hub de inovação científica aplicada e abriga diversas indústrias que produzem desde tecnologia de ponta até bens de consumo. Com sua população densa e diversificada, Bugópolis é conhecida por sua infraestrutura avançada, que se estende até o subsolo, suas universidades renomadas e uma vibrante cena cultural.
+          </div>`
+      },
+      {
+        "coords": [20, 40],  // Ajuste as coordenadas conforme necessário
+        "popupContent": `
+          <div class="custom-popup">
+            <img src="https://i.imgur.com/JGsZeUj.png" alt="Antheia">
+            <b>Antheia</b><br>Antheia é uma ilha ao sudeste de Bugland, conhecida por sua beleza natural e cultural. Antheia abriga a prestigiosa Academia de Filosofia de PlatAnt. A ilha é um ponto de encontro para filósofos, artistas e músicos, que se reúnem para trocar ideias e expressar suas artes. No sul de Antheia, um porto marítimo comercial movimenta a economia local, facilitando o comércio com outras partes de Bugland.
+          </div>`
+      }
+    ];
+
+    markers.forEach(function(marker) {
+      L.marker(marker.coords).addTo(map)
+        .bindPopup(marker.popupContent);
+    });
+  </script>
+</body>
+</html>
